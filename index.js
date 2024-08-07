@@ -43,7 +43,7 @@ bot.on("callback_query", function (query) {
     );
   } else {
     queries[query.id] = query;
-    const gameurl = `https://${webURL}/index.html?id=${query.id}`;
+    const gameurl = `https://${webURL}/index.html?id=${query.id}?uid=${msg.from.id}`;
     bot.answerCallbackQuery(query.id, { url: gameurl });
   }
 });
