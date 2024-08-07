@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const TelegramBot = require("node-telegram-bot-api");
 
-const gameName = "CatfLip";
+const gameName = "testGame";
 const webURL = "www.catflip.run";
 
 const server = express();
