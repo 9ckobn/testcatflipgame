@@ -48,7 +48,7 @@ bot.on("callback_query", function (query) {
     const userId = query.from.id;
     const nickname = query.from.username;
 
-    const gameurl = `https://${webURL}/index.html?id=${query.id}&uid=${userId}&nickname=${nickname}`;
+    const gameurl = `https://${webURL}/index.html?id=${query.id}&userid=${userId}&usernickname=${nickname}`;
     bot.answerCallbackQuery(query.id, { url: gameurl });
   }
 });
