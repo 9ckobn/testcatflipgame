@@ -1,15 +1,19 @@
-<!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Subway Surfers Telegram</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=1080 height=1920 style="width: 1080px; height: 1920px; background: #231F20"></canvas>
-    <script src="Build/6a9d9216e56a9882910bd818e0e9fb16.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    <!-- Подключение скрипта Telegram WebApp -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body style="text-align: center; padding: 0; border: 0; margin: 0;">
+<canvas id="unity-canvas" width=1080 height=1920 style="width: 1080px; height: 1920px; background: #231F20"></canvas>
+<script src="Build/6a9d9216e56a9882910bd818e0e9fb16.loader.js"></script>
+<script>
+    // Инициализация Telegram WebApp API
+    Telegram.WebApp.ready();
+    
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -22,19 +26,27 @@
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
-      }
+    }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/173e577155480656dcc6af9ac63c4ab3.data.unityweb",
-        frameworkUrl: "Build/9997f6d6994a153934ad536fc7e4fc3a.framework.js.unityweb",
-        codeUrl: "Build/d34c22712a376fcfb5fa01a111fd068a.wasm.unityweb",
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/ad3cbef9e41ab3a3125745fcc77f2e32.data.unityweb",
+        frameworkUrl: "Build/caa0d867ba995c83d69643af1648897f.framework.js.unityweb",
+        codeUrl: "Build/b547cc7284b1d13bb03fc075a3134400.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Subway Surfers Telegram",
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      });
-    </script>
-  </body>
+    }).then((unityInstance) => {
+        // Пример получения данных пользователя из Telegram
+        const initData = Telegram.WebApp.initDataUnsafe;
+        // Например, ты можешь передать ID пользователя в Unity для персонализации
+        unityInstance.SendMessage('Boot', 'SetUID', initData.user.id);
+        unityInstance.SendMessage('Boot', 'SetNickname', initData.user.username);
+
+        Telegram.WebApp.expand();
+    });
+</script>
+</body>
 </html>
