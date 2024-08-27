@@ -34,7 +34,7 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
     const nickname = msg.from.username;
-    const gameurl = `https://${webURL}/index.html?userid=${userId}&usernickname=${nickname}`;
+    const gameurl = `https://${webURL}/index.html`;
     bot.sendMessage(chatId, "Tap to play", {
         reply_markup: {
             inline_keyboard: [
