@@ -1,51 +1,50 @@
+<!DOCTYPE html>
 <html lang="en-us">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | Subway Surfers Telegram</title>
-  <!-- Подключение скрипта Telegram WebApp -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body style="text-align: center; padding: 0; border: 0; margin: 0;">
-<canvas id="unity-canvas" width=1080 height=1920 style="width: 1080px; height: 1920px; background: #231F20"></canvas>
-<script src="Build/6a9d9216e56a9882910bd818e0e9fb16.loader.js"></script>
-<script>
-  // Инициализация Telegram WebApp API
-  Telegram.WebApp.ready();
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Subway Surfers Telegram</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
+    <canvas id="unity-canvas" width=1080 height=1920 style="width: 1080px; height: 1920px; background: #231F20"></canvas>
+    <script src="Build/6a9d9216e56a9882910bd818e0e9fb16.loader.js"></script>
+    <script>
+      Telegram.WebApp.ready();
+      
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
 
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    // Mobile device style: fill the whole browser client area with the game canvas:
-    var meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-    document.getElementsByTagName('head')[0].appendChild(meta);
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
 
-    var canvas = document.querySelector("#unity-canvas");
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.position = "fixed";
+        document.body.style.textAlign = "left";
+      }
 
-    document.body.style.textAlign = "left";
-  }
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/119ce05d72c071a67cabf0b64fa2a7ea.data.unityweb",
+        frameworkUrl: "Build/70d6c0b679e49f98d24e74ab963a87bd.framework.js.unityweb",
+        codeUrl: "Build/51b7b1c0a22a71a64d58dd5b954f4970.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Subway Surfers Telegram",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      }).then((unityInstance) => {
+        // Пример получения данных пользователя из Telegram
+        const initData = Telegram.WebApp.initDataUnsafe;
+        unityInstance.SendMessage('Boot', 'SetUID', initData.user.id.toString());
+        unityInstance.SendMessage('Boot', 'SetNickname', initData.user.username);
 
-  createUnityInstance(document.querySelector("#unity-canvas"), {
-    dataUrl: "Build/72eb1c89265ac27b2686d548a1e88828.data.unityweb",
-    frameworkUrl: "Build/9997f6d6994a153934ad536fc7e4fc3a.framework.js.unityweb",
-    codeUrl: "Build/c4d72149535c4fee1e89a1cd23503d8e.wasm.unityweb",
-    streamingAssetsUrl: "StreamingAssets",
-    companyName: "DefaultCompany",
-    productName: "Subway Surfers Telegram",
-    productVersion: "0.1",
-    // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-    // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-  }).then((unityInstance) => {
-    // Пример получения данных пользователя из Telegram
-    const initData = Telegram.WebApp.initDataUnsafe;
-    unityInstance.SendMessage('Boot', 'SetUID', initData.user.id);
-    unityInstance.SendMessage('Boot', 'SetNickname', initData.user.username);
-
-    Telegram.WebApp.expand();
-  });
-</script>
-</body>
+        Telegram.WebApp.expand();
+      });
+    </script>
+  </body>
 </html>
