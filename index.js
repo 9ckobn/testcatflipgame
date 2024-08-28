@@ -9,7 +9,7 @@ const webURL = "www.catflip.run";
 const server = express();
 const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true});
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 const SCORE_TOKEN = process.env.SCORE_TOKEN.split(";").map((t) => BigInt(t));
 
@@ -44,35 +44,12 @@ bot.onText(/\/start/, (msg) => {
     });
 });
 
-// bot.onText(/\/help/, (msg) =>
-//   bot.sendMessage(
-//     msg.from.id,
-//     "This bot implements a simple game. Say /game if you want to play."
-//   )
-// );
-// bot.onText(/\/start|\/game/, (msg) => bot.sendGame(msg.from.id, gameName));
-// bot.on("callback_query", function (query) {
-//   if (query.game_short_name !== gameName) {
-//     bot.answerCallbackQuery(
-//       query.id,
-//       "Sorry, '" + query.game_short_name + "' is not available."
-//     );
-//   } else {
-//     queries[query.id] = query;
-//     const userId = query.from.id;
-//     const nickname = query.from.username;
-//
-//     const gameurl = `https://${webURL}/index.html?id=${query.id}&userid=${userId}&usernickname=${nickname}`;
-//     bot.answerCallbackQuery(query.id, { url: gameurl });
-//   }
-// });
-// bot.on("inline_query", function (iq) {
-//   bot.answerInlineQuery(iq.id, [
-//     { type: "game", id: "0", game_short_name: gameName },
-//   ]);
-// });
+server.use(express.static(path.join(__dirname, 'public')));
 
-server.use(express.static(path.join(__dirname, "public")));
+server.get('*', (req, res) => {
+    console.log('Some enter non-static')
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 server.get("/highscore/:score", function (req, res, next) {
     if (!Object.hasOwnProperty.call(queries, req.query.id)) return next();
