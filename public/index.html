@@ -28,9 +28,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/119ce05d72c071a67cabf0b64fa2a7ea.data.unityweb",
-        frameworkUrl: "Build/70d6c0b679e49f98d24e74ab963a87bd.framework.js.unityweb",
-        codeUrl: "Build/51b7b1c0a22a71a64d58dd5b954f4970.wasm.unityweb",
+        dataUrl: "Build/9ec38f68d16209bffe47394f8c3e5569.data.unityweb",
+        frameworkUrl: "Build/900bb089f0f666eb71ce2f735bb8f365.framework.js.unityweb",
+        codeUrl: "Build/ec428fcff6e05147bd650153599a4934.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Subway Surfers Telegram",
@@ -40,11 +40,17 @@
       }).then((unityInstance) => {
         // Пример получения данных пользователя из Telegram
         const initData = Telegram.WebApp.initDataUnsafe;
-        unityInstance.SendMessage('Boot', 'SetUID', initData.user.id.toString());
-        unityInstance.SendMessage('Boot', 'SetNickname', initData.user.username);
+        // unityInstance.SendMessage('Boot', 'SetUID', initData.user.id.toString());
+        // unityInstance.SendMessage('Boot', 'SetNickname', initData.user.username);
+
+        unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(initData.user));
 
         Telegram.WebApp.expand();
       });
+
+      function ShareReferralUrl(url) {
+        window.open(url);
+      }
     </script>
   </body>
 </html>
