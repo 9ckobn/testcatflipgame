@@ -46,10 +46,10 @@ bot.onText(/\/start/, (msg) => {
 
 server.use(express.static(path.join(__dirname, 'public')));
 
-server.get('*', (req, res) => {
-    console.log('Some enter non-static')
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// server.get('*', (req, res) => {
+//     console.log('Some enter non-static')
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 server.get("/highscore/:score", function (req, res, next) {
     if (!Object.hasOwnProperty.call(queries, req.query.id)) return next();
