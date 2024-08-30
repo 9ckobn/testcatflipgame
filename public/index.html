@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Subway Surfers Telegram</title>
+    <title>Unity WebGL Player | Catflip Run</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=1080 height=1920 style="width: 1080px; height: 1920px; background: #231F20"></canvas>
+    <canvas id="unity-canvas" width=645 height=1398 style="width: 645px; height: 1398px; background: #231F20"></canvas>
     <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
     <script>
       Telegram.WebApp.ready();
-      
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -28,12 +27,12 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/c41712d7760d502cccc3ad5292af9b45.data",
-        frameworkUrl: "Build/0e7ce989d0836467f062d2246f837dea.framework.js",
-        codeUrl: "Build/4a391fa2e2749c7211618b84fc5ad943.wasm",
+        dataUrl: "Build/208e74655fc0b0daacdffd644ca5cdac.data",
+        frameworkUrl: "Build/f2347f9132f4ca88a2b3435439c6b149.framework.js",
+        codeUrl: "Build/8c700d4cb5d681e7eacd9f3f11575db4.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Subway Surfers Telegram",
+        companyName: "Catflip IO",
+        productName: "Catflip Run",
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
