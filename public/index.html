@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Catflip Run</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=645 height=1398 style="width: 645px; height: 1398px; background: #231F20"></canvas>
-    <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
-    <script>
-      Telegram.WebApp.ready();
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+</head>
+<body style="text-align: center; padding: 0; border: 0; margin: 0;">
+<canvas id="unity-canvas" width=645 height=1398 style="width: 645px; height: 1398px; background: #231F20"></canvas>
+<script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
+<script>
+    Telegram.WebApp.ready();
+    
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -24,10 +25,10 @@
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
-      }
+    }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/208e74655fc0b0daacdffd644ca5cdac.data",
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/35f318eab77369a4339c55a0653786ea.data",
         frameworkUrl: "Build/f2347f9132f4ca88a2b3435439c6b149.framework.js",
         codeUrl: "Build/8c700d4cb5d681e7eacd9f3f11575db4.wasm",
         streamingAssetsUrl: "StreamingAssets",
@@ -36,20 +37,21 @@
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      }).then((unityInstance) => {
-        const initData = Telegram.WebApp.initDataUnsafe;
-        const userData = {
-          user: initData.user,
-          referral: initData.start_param // например, если start=referral
-        };
-        unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
+    })
+        .then((unityInstance) => {
+            const initData = Telegram.WebApp.initDataUnsafe;
+            const userData = {
+                user: initData.user,
+                referral: initData.start_param // например, если start=referral
+            };
+            unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
-        Telegram.WebApp.expand();
-      });
+            Telegram.WebApp.expand();
+        });
 
-      function ShareInviteLink(url) {
+    function ShareInviteLink(url) {
         window.location.href = url;
-      }
-    </script>
-  </body>
+    }
+</script>
+</body>
 </html>
