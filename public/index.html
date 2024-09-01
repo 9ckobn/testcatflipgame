@@ -11,6 +11,7 @@
 <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
 <script>
     Telegram.WebApp.ready();
+    
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -27,9 +28,9 @@
     }
 
     createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/fe96f633ab6ac3e606f7d52e9d33f54b.data",
-        frameworkUrl: "Build/ea17e06d6fa6f80a6473fe93eaf6078a.framework.js",
-        codeUrl: "Build/02a196ca18d5c38a1719e754482340bc.wasm",
+        dataUrl: "Build/50f3b237379d92b08e7d91386d1d8dab.data",
+        frameworkUrl: "Build/fec01772d1ab79c2a389a3a54de5cca5.framework.js",
+        codeUrl: "Build/7701fbd05082069144c72623e0bc6043.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Catflip IO",
         productName: "Catflip Run",
@@ -54,7 +55,7 @@
     function OpenUrl(url) {
         window.open(url);
     }
-    
+
 </script>
 </body>
 </html>
