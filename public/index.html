@@ -11,46 +11,62 @@
       padding: 0;
       overflow: hidden;
       height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: url('1.png') no-repeat center center;
-      background-size: cover;
     }
 
-    #loading-bar-container {
-      width: 80%;
-      height: 30px;
-      background-color: #e0e0e0;
-      border-radius: 15px;
-      overflow: hidden;
+    #loading-screen {
       position: absolute;
-      bottom: 10%;
-      left: 10%;
-      right: 10%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('/1.png') no-repeat center center fixed;
+      background-size: contain;
+      z-index: 1000;
+      transition: opacity 1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    #loading-bar {
-      height: 100%;
-      width: 0%;
-      background-color: #FF6B00;
-      border-radius: 15px 0 0 15px;
-      transition: width 0.3s;
+    #loading-icon {
+      width: 100px;
+      height: 100px;
+      background: url('/2.png') no-repeat center center;
+      background-size: contain;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     canvas {
       display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-<canvas id="unity-canvas" width=645 height=1398></canvas>
-<div id="loading-bar-container">
-  <div id="loading-bar"></div>
+
+<div id="loading-screen">
+  <div id="loading-icon"></div>
 </div>
+
+<canvas id="unity-canvas" width=645 height=1398></canvas>
 
 <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
 <script>
+  Telegram.WebApp.expand();
+
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     var meta = document.createElement('meta');
     meta.name = 'viewport';
@@ -65,8 +81,6 @@
     document.body.style.textAlign = "left";
   }
 
-  var loadingBar = document.getElementById('loading-bar');
-
   createUnityInstance(document.querySelector("#unity-canvas"), {
     dataUrl: "Build/1aca80a758fe79966c09c82d71edc7d1.data.br",
     frameworkUrl: "Build/61a45b0a4b81fa32c18230e2fbfc4d67.framework.js.br",
@@ -76,11 +90,7 @@
     productName: "Catflip Run",
     productVersion: "0.1",
     onProgress: function(unityInstance, progress) {
-      loadingBar.style.width = (progress * 100) + '%';
-      if (progress === 1) {
-        document.getElementById('loading-bar-container').style.display = 'none';
-        document.querySelector('canvas').style.display = 'block';
-      }
+      // Обновление прогресса не требуется, т.к. используется вращающаяся иконка
     }
   }).then((unityInstance) => {
     const initData = Telegram.WebApp.initDataUnsafe;
@@ -90,7 +100,13 @@
     };
     unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
-    Telegram.WebApp.expand();
+    setTimeout(() => {
+      document.querySelector('canvas').style.display = 'block';
+      document.getElementById('loading-screen').style.display = 'none';
+    }, 3000);
+
+  }).catch((message) => {
+    alert(message);
   });
 
   function ShareInviteLink(url) {
