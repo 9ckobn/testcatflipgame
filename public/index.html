@@ -57,7 +57,7 @@
 
     const interval = setInterval(() => {
       start += 10;
-      loadingBar.style.width = ${start}%;
+      loadingBar.style.width = start;
 
       if (start >= 100) {
         clearInterval(interval);
