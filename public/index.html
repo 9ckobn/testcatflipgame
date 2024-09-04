@@ -1,126 +1,58 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | Catflip Run</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    /* Стили для загрузочного экрана */
-    #loading-screen {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background-color: #231F20;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      transition: opacity 1s ease; /* Плавное затухание */
-    }
-
-    #loading-bar-container {
-      width: 80%;
-      height: 30px;
-      background-color: #333;
-      border-radius: 15px;
-      overflow: hidden;
-    }
-
-    #loading-bar {
-      width: 0;
-      height: 100%;
-      background-color: #4caf50;
-      transition: width 0.5s;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Catflip Run</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-<!-- Загрузочный экран -->
-<div id="loading-screen">
-  <div id="loading-bar-container">
-    <div id="loading-bar"></div>
-  </div>
-</div>
-
-<!-- Unity Canvas -->
-<canvas id="unity-canvas" style="background: #231F20"></canvas>
-
+<canvas id="unity-canvas" width=645 height=1398 style="width: 645px; height: 1398px; background: #231F20"></canvas>
 <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
 <script>
-  // Расширяем WebApp сразу при открытии страницы
-  Telegram.WebApp.expand();
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
 
-  function showLoadingBar(duration) {
-    const loadingBar = document.getElementById('loading-bar');
-    let start = 0;
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
 
-    const interval = setInterval(() => {
-      start += 10;
-      loadingBar.style.width = start;
+        document.body.style.textAlign = "left";
+    }
 
-      if (start >= 100) {
-        clearInterval(interval);
-      }
-    }, duration / 10);
-  }
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/95415ae61f5d81e9d55eab02ea74afb1.data.br",
+        frameworkUrl: "Build/0aacabf54a20a16d40b5489f3a01fbb8.framework.js.br",
+        codeUrl: "Build/756e5b431231c5b6e1aca9f527533f97.wasm.br",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Catflip IO",
+        productName: "Catflip Run",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+    }).then((unityInstance) => {
+        const initData = Telegram.WebApp.initDataUnsafe;
+        const userData = {
+            user: initData.user,
+            referral: initData.start_param // например, если start=referral
+        };
+        unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
-  function hideLoadingScreen() {
-    const loadingScreen = document.getElementById('loading-screen');
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => {
-      loadingScreen.style.display = 'none';
-    }, 1000); // Убираем через 1 секунду, чтобы завершилось плавное затухание
-  }
+        Telegram.WebApp.expand();
+    });
 
-  // Показываем полоску загрузки
-  const additionalLoadTime = 3000; // Дополнительное время в миллисекундах
-  showLoadingBar(additionalLoadTime);
+    function ShareInviteLink(url) {
+        window.location.href = url;
+    }
 
-  createUnityInstance(document.querySelector("#unity-canvas"), {
-    dataUrl: "Build/e3a4a88f44483581d79d0e578fb6d476.data.br",
-    frameworkUrl: "Build/bfe2c30b1fc3d3bfa31d1d3cd09046eb.framework.js.br",
-    codeUrl: "Build/76a6c2158661572e810a71c9f46acbb7.wasm.br",
-    streamingAssetsUrl: "StreamingAssets",
-    companyName: "Catflip IO",
-    productName: "Catflip Run",
-    productVersion: "0.1",
-    matchWebGLToCanvasSize: true, // Включаем соотношение размеров WebGL к размеру canvas
-    devicePixelRatio: window.devicePixelRatio // Используем правильное разрешение
-  }).then((unityInstance) => {
-    const initData = Telegram.WebApp.initDataUnsafe;
-    const userData = {
-      user: initData.user,
-      referral: initData.start_param // например, если start=referral
-    };
-    unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
-
-    // Ждем X секунд после загрузки Unity инстанса, затем скрываем экран загрузки
-    setTimeout(hideLoadingScreen, additionalLoadTime);
-  });
-
-  function ShareInviteLink(url) {
-    window.location.href = url;
-  }
-
-  function OpenUrl(url) {
-    Telegram.WebApp.openLink(url);
-  }
-
-  // Обрабатываем случай для мобильных устройств
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    var meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-    document.getElementsByTagName('head')[0].appendChild(meta);
-
-    var canvas = document.querySelector("#unity-canvas");
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.position = "fixed";
-
-    document.body.style.textAlign = "left";
-  }
+    function OpenUrl(url) {
+        Telegram.WebApp.openLink(url);
+    }
 </script>
 </body>
 </html>
