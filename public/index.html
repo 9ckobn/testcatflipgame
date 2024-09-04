@@ -5,13 +5,53 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Unity WebGL Player | Catflip Run</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('1.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    #loading-bar-container {
+      width: 80%;
+      height: 30px;
+      background-color: #e0e0e0;
+      border-radius: 15px;
+      overflow: hidden;
+      position: absolute;
+      bottom: 10%;
+      left: 10%;
+      right: 10%;
+    }
+
+    #loading-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #FF6B00;
+      border-radius: 15px 0 0 15px;
+      transition: width 0.3s;
+    }
+
+    canvas {
+      display: none;
+    }
+  </style>
 </head>
-<body style="text-align: center; padding: 0; border: 0; margin: 0;">
-<canvas id="unity-canvas" width=645 height=1398 style="width: 645px; height: 1398px; background: #231F20"></canvas>
+<body>
+<canvas id="unity-canvas" width=645 height=1398></canvas>
+<div id="loading-bar-container">
+  <div id="loading-bar"></div>
+</div>
+
 <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
 <script>
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    // Mobile device style: fill the whole browser client area with the game canvas:
     var meta = document.createElement('meta');
     meta.name = 'viewport';
     meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -25,6 +65,8 @@
     document.body.style.textAlign = "left";
   }
 
+  var loadingBar = document.getElementById('loading-bar');
+
   createUnityInstance(document.querySelector("#unity-canvas"), {
     dataUrl: "Build/1aca80a758fe79966c09c82d71edc7d1.data.br",
     frameworkUrl: "Build/61a45b0a4b81fa32c18230e2fbfc4d67.framework.js.br",
@@ -33,13 +75,18 @@
     companyName: "Catflip IO",
     productName: "Catflip Run",
     productVersion: "0.1",
-    // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-    // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+    onProgress: function(unityInstance, progress) {
+      loadingBar.style.width = (progress * 100) + '%';
+      if (progress === 1) {
+        document.getElementById('loading-bar-container').style.display = 'none';
+        document.querySelector('canvas').style.display = 'block';
+      }
+    }
   }).then((unityInstance) => {
     const initData = Telegram.WebApp.initDataUnsafe;
     const userData = {
       user: initData.user,
-      referral: initData.start_param // например, если start=referral
+      referral: initData.start_param
     };
     unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
