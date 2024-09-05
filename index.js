@@ -35,10 +35,23 @@ bot.onText(/\/start/, (msg) => {
     const userId = msg.from.id;
     const nickname = msg.from.username;
     const gameurl = `https://${webURL}/index.html`;
-    bot.sendMessage(chatId, "Tap to play", {
+    const communityLink = 'https://t.me/catflipio';  // ссылка на сообщество в Telegram
+
+    // Отправка сообщения с картинкой, текстом и кнопками
+    bot.sendPhoto(chatId, 'https://firebasestorage.googleapis.com/v0/b/catflip-run.appspot.com/o/IMG_0593.JPG?alt=media&token=66b1ba9b-cd4e-4a48-8ca9-4ed31a2a05ee', {  // Укажите здесь URL вашей картинки
+        caption: "Hello, sporty kitten!\n" +
+            "\n" +
+            "🐈 Welcome to the world of the CatFlip gameFi project! Here, you can not only play but also earn FlipCoin, which you can later exchange for $CATLI and receive rewards in TON — listing is just around the corner! Run the longest marathons, collect the most coins, and prove that you're the fastest and coolest sporty kitten out there!\n" +
+            "\n" +
+            "🥇 CatFlip is a unique 3D runner in Telegram, so the first launch might take a little time. But don’t worry—we’re just spreading coins around the streets of Dubai so you can collect as many as possible.\n" +
+            "Don’t forget to invite your friends! For each one you bring, you’ll receive bonus FlipCoin, helping you level up and reach new heights.\n" +
+            "\n" +
+            "\n" +
+            "👀 Join our community to stay up-to-date with the latest CatFlip news! ",
         reply_markup: {
             inline_keyboard: [
-                [{text: "Play", web_app: {url: gameurl}}]
+                [{text: "💸 Play", web_app: {url: gameurl}}],
+                [{text: "📣 Community", url: communityLink}]
             ]
         }
     });
