@@ -39,7 +39,7 @@ bot.onText(/\/start/, (msg) => {
 
     // Отправка сообщения с картинкой, текстом и кнопками
     bot.sendPhoto(chatId, 'https://firebasestorage.googleapis.com/v0/b/catflip-run.appspot.com/o/Frame%2037596.png?alt=media&token=c6bc0e14-afdb-464c-9684-efeead66f2ad', {  // Укажите здесь URL вашей картинки
-        caption: "**Hello, sporty kitten!**\n" +
+        caption: "<b>Hello, sporty kitten!</b>\n" +
             "\n" +
             "🐈 Welcome to the world of the CatFlip gameFi project! Here, you can not only play but also earn FlipCoin, which you can later exchange for $CATLI and receive rewards in TON — listing is just around the corner! Run the longest marathons, collect the most coins, and prove that you're the fastest and coolest sporty kitten out there!\n" +
             "\n" +
@@ -48,6 +48,7 @@ bot.onText(/\/start/, (msg) => {
             "\n" +
             "\n" +
             "👀 Join our community to stay up-to-date with the latest CatFlip news! ",
+        parse_mode: 'HTML',
         reply_markup: {
             inline_keyboard: [
                 [{text: "💸 Play", web_app: {url: gameurl}}],
