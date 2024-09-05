@@ -38,8 +38,8 @@ bot.onText(/\/start/, (msg) => {
     const communityLink = 'https://t.me/catflipio';  // ссылка на сообщество в Telegram
 
     // Отправка сообщения с картинкой, текстом и кнопками
-    bot.sendPhoto(chatId, 'https://firebasestorage.googleapis.com/v0/b/catflip-run.appspot.com/o/IMG_0593.JPG?alt=media&token=66b1ba9b-cd4e-4a48-8ca9-4ed31a2a05ee', {  // Укажите здесь URL вашей картинки
-        caption: "Hello, sporty kitten!\n" +
+    bot.sendPhoto(chatId, 'https://firebasestorage.googleapis.com/v0/b/catflip-run.appspot.com/o/Frame%2037596.png?alt=media&token=c6bc0e14-afdb-464c-9684-efeead66f2ad', {  // Укажите здесь URL вашей картинки
+        caption: "<b>Hello, sporty kitten!</b>\n" +
             "\n" +
             "🐈 Welcome to the world of the CatFlip gameFi project! Here, you can not only play but also earn FlipCoin, which you can later exchange for $CATLI and receive rewards in TON — listing is just around the corner! Run the longest marathons, collect the most coins, and prove that you're the fastest and coolest sporty kitten out there!\n" +
             "\n" +
