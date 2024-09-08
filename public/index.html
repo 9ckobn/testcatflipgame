@@ -88,9 +88,9 @@
   }
 
   createUnityInstance(document.querySelector("#unity-canvas"), {
-    dataUrl: "Build/a6623e0c8492f9012b1e16d5520dbd88.data.br",
-    frameworkUrl: "Build/0b78de2c78b84b2887b9c7fe32fc254c.framework.js.br",
-    codeUrl: "Build/23589c21a2baa675a027718c01b48728.wasm.br",
+    dataUrl: "Build/d910abbacdbd0619d34271c1ca63ceda.data.br",
+    frameworkUrl: "Build/c0aabf501bba1d355db68bc18953dbdf.framework.js.br",
+    codeUrl: "Build/8a89465f432cbe79356667f68d43d4d1.wasm.br",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "Catflip IO",
     productName: "Catflip Run",
@@ -127,12 +127,12 @@
     ConnectWalletAsync(uid);
   }
 
-  function ConnectWalletAsync(uid) {
+  async function ConnectWalletAsync(uid) {
     const telegramWalletName = 'telegram-wallet';
     const connector = new TonConnectSDK.TonConnect({
       manifestUrl: 'https://catflip-test.ru/tonconnect-manifest.json',
     });
-    const walletsList = connector.getWallets();
+    const walletsList = await connector.getWallets();
 
     const unsubscribe = connector.onStatusChange(async (walletInfo) => {
       console.log('Connection status:', walletInfo);
