@@ -127,7 +127,7 @@
   async function ConnectWallet(uid) {
     const telegramWalletName = 'telegram-wallet';
     const connector = new TonConnectSDK.TonConnect({
-      manifestUrl: 'https://catflip-test.ru/tonconnect-manifest.json',
+      manifestUrl: 'https://catflip.run/tonconnect-manifest.json',
     });
     const walletsList = await connector.getWallets();
 
