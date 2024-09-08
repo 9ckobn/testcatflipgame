@@ -1,121 +1,172 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | Catflip Run</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Catflip Run</title>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js" defer></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    #loading-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('/1.png') no-repeat center center fixed;
-      background-size: contain;
-      z-index: 1000;
-      transition: opacity 1s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        #loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/1.png') no-repeat center center fixed;
+            background-size: contain;
+            z-index: 1000;
+            transition: opacity 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    #loading-icon {
-      width: 50px;
-      height: 50px;
-      background: url('/2.png') no-repeat center center;
-      background-size: contain;
-      animation: spin 2s linear infinite;
-    }
+        #loading-icon {
+            width: 50px;
+            height: 50px;
+            background: url('/2.png') no-repeat center center;
+            background-size: contain;
+            animation: spin 2s linear infinite;
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-    canvas {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
+        canvas {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 
 <div id="loading-screen">
-  <div id="loading-icon"></div>
+    <div id="loading-icon"></div>
 </div>
 
 <canvas id="unity-canvas" width=645 height=1398></canvas>
 
 <script src="Build/36c69a970bbbf468f4a412b485f7c710.loader.js"></script>
 <script>
-  Telegram.WebApp.expand();
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
 
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-    var meta = document.createElement('meta');
-    meta.name = 'viewport';
-    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-    document.getElementsByTagName('head')[0].appendChild(meta);
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
 
-    var canvas = document.querySelector("#unity-canvas");
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.position = "fixed";
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
 
-    document.body.style.textAlign = "left";
-  }
-
-  createUnityInstance(document.querySelector("#unity-canvas"), {
-    dataUrl: "Build/74ddd124be0d87d7b5d7b5e74d002bad.data.br",
-    frameworkUrl: "Build/7d18b17089654bd24a89c215ced08452.framework.js.br",
-    codeUrl: "Build/5ca48b392c58b358a7e8e5fe5549f167.wasm.br",
-    streamingAssetsUrl: "StreamingAssets",
-    companyName: "Catflip IO",
-    productName: "Catflip Run",
-    productVersion: "0.1",
-    onProgress: function(unityInstance, progress) {
-      // Обновление прогресса не требуется, т.к. используется вращающаяся иконка
+        document.body.style.textAlign = "left";
     }
-  }).then((unityInstance) => {
-    const initData = Telegram.WebApp.initDataUnsafe;
-    const userData = {
-      user: initData.user,
-      referral: initData.start_param
-    };
-    unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
-    setTimeout(() => {
-      document.querySelector('canvas').style.display = 'block';
-      document.getElementById('loading-screen').style.display = 'none';
-    }, 3000);
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/726643fcfdb5a11312af67ebb396ac6f.data.br",
+        frameworkUrl: "Build/6a8b0b06e58d2d2af18100d9492aec1f.framework.js.br",
+        codeUrl: "Build/7256edd92579662014ac4b2dbeb600cc.wasm.br",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Catflip IO",
+        productName: "Catflip Run",
+        productVersion: "0.1",
+        onProgress: function (unityInstance, progress) {
+            // Обновление прогресса не требуется, т.к. используется вращающаяся иконка
+        }
+    }).then((unityInstance) => {
+        const initData = Telegram.WebApp.initDataUnsafe;
+        const userData = {
+            user: initData.user,
+            referral: initData.start_param
+        };
+        unityInstance.SendMessage('Boot', 'SetUserRaw', JSON.stringify(userData));
 
-  }).catch((message) => {
-    alert(message);
-  });
+        setTimeout(() => {
+            document.querySelector('canvas').style.display = 'block';
+            document.getElementById('loading-screen').style.display = 'none';
+        }, 3000);
 
-  function ShareInviteLink(url) {
+    }).catch((message) => {
+        alert(message);
+    });
+
+    function ShareInviteLink(url) {
+        window.location.href = url;
+    }
+
+    function OpenUrl(url) {
+        Telegram.WebApp.openLink(url);
+    }
+    async function ConnectWallet(uid) {
+        const telegramWalletName = 'telegram-wallet'
+        Telegram.WebApp.ready();
+        const connector = new TonConnectSDK.TonConnect({
+            manifestUrl: 'https://catflip-test.ru/tonconnect-manifest.json',
+        });
+        const walletsList = await connector.getWallets();
+
+        const unsubscribe = connector.onStatusChange(async (walletInfo) => {
+            console.log('Connection status:', walletInfo);
+
+            if (walletInfo?.account?.address) {
+                const walletAddress = walletInfo.account.address;
+
+                try {
+                    const response = await fetch(`https://catflip-run-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`, {
+                    method: 'PATCH',
+                        headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({address: walletInfo.account.address}),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при отправке данных в базу');
+                }
+
+                console.log('Адрес кошелька записан в базу:', walletAddress);
+            } catch (error) {
+                console.error('Ошибка при записи адреса кошелька в базу данных:', error);
+            }
+        }
+    });
+
+    connector.restoreConnection();
+
+    const telegramWallet = walletsList.find(wallet => wallet.appName === telegramWalletName)
+
+    const url = connector.connect({
+        universalLink: telegramWallet.universalLink,
+        bridgeUrl: telegramWallet.bridgeUrl,
+    });
+
     window.location.href = url;
-  }
-
-  function OpenUrl(url) {
-    Telegram.WebApp.openLink(url);
-  }
+    }
 </script>
 </body>
 </html>
